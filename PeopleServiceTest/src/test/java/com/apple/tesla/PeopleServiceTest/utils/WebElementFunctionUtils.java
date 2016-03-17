@@ -39,7 +39,7 @@ public class WebElementFunctionUtils extends WebElementPaths{
 		dateTextbox.sendKeys(input);
 	}
 	
-	
+//click 	
 	
 	public void clickQuoteCurrency()
 	{
@@ -69,9 +69,21 @@ public class WebElementFunctionUtils extends WebElementPaths{
 	{
 		dateTextbox.click();
 	}
+	public void closeDateAlert()
+	{
+		dateAlertClose.click();
+	}
+	public void closeQuoteAlert()
+	{
+		quoteCurrencyAlertClose.click();
+	}
+	public void closeBaseAlert()
+	{
+		baseCurrencyAlertClose.click();
+	}
 	
 	
-
+//clear
 	public void clearQuoteAmount()
 	{
 		quoteAmountTextbox.clear();
@@ -82,9 +94,12 @@ public class WebElementFunctionUtils extends WebElementPaths{
 		baseAmountTextbox.clear();
 	}
 	
+	public void clearDate()
+	{
+		dateTextbox.clear();
+	}
 	
-	
-	
+	//press Enter
 	public void enterQuoteCurrency()
 	{
 		quoteCurrencyTextbox.sendKeys(Keys.ENTER);
@@ -96,6 +111,43 @@ public class WebElementFunctionUtils extends WebElementPaths{
 		baseCurrencyTextbox.sendKeys(Keys.ENTER);
 	}
 	
-	
+	public void enterDate()
+	{
+		dateTextbox.sendKeys(Keys.ENTER);
+	}
 
+	
+	//gettext
+	
+	public String getQuoteAmount()
+	{
+		return quoteAmountTextbox.getAttribute("value");
+	}
+	
+	public String getBaseAmount()
+	{
+		return baseAmountTextbox.getAttribute("value");
+	}
+	
+	//visible
+
+	public boolean isQuoteAlertVisible()
+	{
+		return quoteCurrencyAlert.isDisplayed();
+	}
+	
+	public boolean isBaseAlertVisible()
+	{
+		return baseCurrencyAlert.isDisplayed();
+	}
+	public boolean isDateAlertVisible()
+	{
+		return dateAlert.isDisplayed();
+	}
+	
+	//click
+	
+	
+	
+	
 }

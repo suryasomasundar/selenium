@@ -39,10 +39,10 @@ public class ClassesTest {
 	
 	TestUtil readInput=new TestUtil();
 	
-	String quoteCurrency,baseCurrency,quoteAmount,baseAmount;
+	String quoteCurrency,baseCurrency,quoteAmount,baseAmount,date;
 	String inputArray[]=new String[4];
 	
-	@Given("Currency")
+	@Given("User navigates to the Website")
 	public void createPersonTest() throws InterruptedException{
 
 	   driver= new FirefoxDriver();
@@ -53,30 +53,13 @@ public class ClassesTest {
 	    
 	    utils=new WebElementFunctionUtils(driver);
 	    
-	    inputArray=readInput.readFromExcel(2);
-	    
-	    quoteCurrency=inputArray[0];
-	    baseCurrency=inputArray[1];
-	    quoteAmount=inputArray[2];
-	    baseAmount=inputArray[3];
+	   
 	    
 	    System.out.println(quoteCurrency);
 	    Actions action = new Actions(driver);
-	   utils.clickQuoteCurrency();
-		
-	   
-	 
-	   
-	    Thread.sleep(2000);
-	utils.inputQuoteCurrency(quoteCurrency);
-	 Thread.sleep(2000);
-	 utils.enterQuoteCurrency();
+	  
 	
-	utils.clickBaseCurrency();
-	Thread.sleep(2000);
-	utils.inputBaseCurrency(baseCurrency);
-	Thread.sleep(2000);
-	utils.enterBaseCurrency();
+
 	
 	
 	utils.clearQuoteAmount();
@@ -89,5 +72,138 @@ public class ClassesTest {
 		
 	}
 	
+	@Then("User reads input from excel (.+)")
+	public void readFromExcel(String input)
+	{
+		 inputArray=readInput.readFromExcel(2);
+		    
+		    quoteCurrency=inputArray[0];
+		    baseCurrency=inputArray[1];
+		    quoteAmount=inputArray[2];
+		  String tempdate= inputArray[3];
+		    StringBuilder sb = new StringBuilder(tempdate);
+		    sb.deleteCharAt(0);
+		    date=sb.toString();
+	}
 	
+	@Then("User inputs quoteCurrency")
+	public void inputQuoteCurrency() throws InterruptedException
+	{
+		utils.clickQuoteCurrency();
+		Thread.sleep(2000);
+		utils.inputQuoteCurrency(quoteCurrency);
+		Thread.sleep(2000);
+		utils.enterQuoteCurrency();
+	}
+	
+	@Then("User inputs baseCurrency")
+	public void inputBaseCurrency() throws InterruptedException
+	{
+		utils.clickBaseCurrency();
+		Thread.sleep(2000);
+		utils.inputBaseCurrency(baseCurrency);
+		Thread.sleep(2000);
+		utils.enterBaseCurrency();
+	}
+	
+	@Then("User inputs Date")
+	public void inputDate() throws InterruptedException
+	{
+		utils.clickDate();
+		utils.clearDate();
+		Thread.sleep(2000);
+		utils.inputDate(date);
+		Thread.sleep(2000);
+		utils.enterDate();
+	}
+	
+	@Then("User inputs quoteAmount")
+	public void inputQuoteAmount() throws InterruptedException
+	{
+		utils.clearQuoteAmount();
+		Thread.sleep(2000);
+		utils.inputQuoteAmount(quoteAmount);
+		
+	}
+	
+	@Then("User checks converted baseCurrency")
+	public void checkBaseCurrency() throws InterruptedException
+	{
+		Thread.sleep(1000);
+		System.out.println("basetext"+utils.getBaseAmount());
+		
+	}
+	
+	@Then("User closes the browser")
+	public void close() throws InterruptedException
+	{
+		//driver.close();
+		
+	}
+	
+	@Then("User Enters quoteCurrency \"(.+)\"")
+	public void currencyAlert(String input) throws InterruptedException
+	{
+		utils.clickQuoteCurrency();
+		Thread.sleep(2000);
+		utils.inputQuoteCurrency(input);
+		Thread.sleep(2000);
+		utils.enterQuoteCurrency();
+	}
+	@Then("User checks for quoteAlert")
+	public void checkQuoteAlert() throws InterruptedException
+	{
+		Thread.sleep(2000);
+		System.out.println(utils.isQuoteAlertVisible());
+		
+		Thread.sleep(2000);
+		utils.closeQuoteAlert();
+		
+		System.out.println(utils.isQuoteAlertVisible());
+	}
+	
+	@Then("User Enters baseCurrency \"(.+)\"")
+	public void currencyBaseAlert(String input) throws InterruptedException
+	{
+		utils.clickBaseCurrency();
+		Thread.sleep(2000);
+		utils.inputBaseCurrency(input);
+		Thread.sleep(2000);
+		utils.enterBaseCurrency();
+	}
+	@Then("User checks for baseAlert")
+	public void checkBaseAlert() throws InterruptedException
+	{
+		Thread.sleep(2000);
+		System.out.println(utils.isBaseAlertVisible());
+		
+		Thread.sleep(2000);
+		utils.closeBaseAlert();
+		
+		System.out.println(utils.isBaseAlertVisible());
+	}
+	@Then("User checks for dateAlert")
+	public void checkDateAlert() throws InterruptedException
+	{
+		utils.clickQuoteCurrency();
+		Thread.sleep(2000);
+		utils.inputQuoteCurrency("Malagasy Franc");
+		Thread.sleep(2000);
+		utils.enterQuoteCurrency();
+		
+		utils.clickQuoteCurrency();
+		Thread.sleep(2000);
+		utils.inputQuoteCurrency("Euro");
+		Thread.sleep(2000);
+		utils.enterQuoteCurrency();
+		
+		
+		Thread.sleep(2000);
+		System.out.println(utils.isDateAlertVisible());
+		
+		Thread.sleep(2000);
+		utils.closeDateAlert();
+		
+		System.out.println(utils.isDateAlertVisible());
+	}
 }

@@ -25,13 +25,26 @@ public class WebElementPaths {
 	@FindBy(id="interbank_rates_input")
 	WebElement interbankRatesTextbox;
 	
-	@FindBy(id="end_date_inputt")
+	@FindBy(id="end_date_input")
 	WebElement dateTextbox;
 	
+	@FindBy(id="quote_annotation")
+	WebElement quoteCurrencyAlert;
 
+	@FindBy(id="base_annotation")
+	WebElement baseCurrencyAlert;
 	
+	@FindBy(id="date_annotation")
+	WebElement dateAlert;
 	
+	@FindBy(xpath=".//*[@id='quote_annotation']/div[@class='annotation_close']")
+	WebElement quoteCurrencyAlertClose;
+
+	@FindBy(xpath=".//*[@id='base_annotation']/div[@class='annotation_close']")
+	WebElement baseCurrencyAlertClose;
 	
+	@FindBy(xpath=".//*[@id='date_annotation']/div[@class='annotation_close']")
+	WebElement dateAlertClose;
 	
 	
 	
