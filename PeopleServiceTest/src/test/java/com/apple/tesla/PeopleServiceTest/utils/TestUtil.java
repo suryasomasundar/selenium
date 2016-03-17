@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Properties;
@@ -25,6 +26,10 @@ import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -50,175 +55,73 @@ public class TestUtil {
 			String propFileName = "peopleservice_"+config.getProperty("myenv")+".properties";
 			System.out.println(propFileName);
 			InputStream stream = TestUtil.class.getClassLoader().getResourceAsStream(propFileName);
-			prop.load(stream);
-			stream.close();
+		//	prop.load(stream);
+		//	stream.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static String readResponseString(HttpResponse response) 
+	public String[] readFromExcel(int i)
 	{
-		StringBuffer result = new StringBuffer();
-		String line = null;
-		String responseString = null;
-		try {
-			BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-			while ((line = rd.readLine()) != null) {
-				result.append(line);
-			}
-			responseString = result.toString();
-		}  catch (IOException e) {
-			e.printStackTrace();
-		}
-		return responseString;
-	}
-
-	
-	
-	
-	public static RequestBuilder buildHTTPPostRequest(String url,String contentType)
-	{
-		RequestBuilder requestBuilder = RequestBuilder.post().setUri(url)
-				.setHeader(HttpHeaders.CONTENT_TYPE, contentType)
-				.setHeader(	HttpHeaders.HOST,getHostName(url));
-		requestBuilder = buildCommonHeaders(requestBuilder);		
-				
-		return requestBuilder;
-	}
-	
-	public static RequestBuilder buildHTTPPostRequestWithoutToken(String url,String contentType)
-	{
-		RequestBuilder requestBuilder = RequestBuilder.post().setUri(url)
-				.setHeader(HttpHeaders.CONTENT_TYPE, contentType)
-				.setHeader(	HttpHeaders.HOST,getHostName(url))
-				.setHeader(HttpHeaders.ACCEPT_LANGUAGE,"en-us")
-		;
-				
-		return requestBuilder;
-	}
-	
-	
-	
-	public static RequestBuilder buildHTTPGetRequest(String url,String contentType)
-	{
-		RequestBuilder requestBuilder = RequestBuilder.get().setUri(url)
-				.setHeader(HttpHeaders.CONTENT_TYPE, contentType)
-				.setHeader(	HttpHeaders.HOST,getHostName(url));
-		requestBuilder = buildCommonHeaders(requestBuilder);		
-				
-		return requestBuilder;
-	}
-	
-	
-	public static RequestBuilder buildHTTPPutRequest(String url,String contentType)
-	{
-		RequestBuilder requestBuilder = RequestBuilder.put().setUri(url)
-				.setHeader(HttpHeaders.CONTENT_TYPE, contentType)
-				.setHeader(	HttpHeaders.HOST,getHostName(url));
-		requestBuilder = buildCommonHeaders(requestBuilder);		
-				
-		return requestBuilder;
-	}
-	
-	public static RequestBuilder buildHTTPDeleteRequest(String url,String contentType)
-	{
-		RequestBuilder requestBuilder = RequestBuilder.delete().setUri(url)
-				.setHeader(HttpHeaders.CONTENT_TYPE, contentType)
-				.setHeader(	HttpHeaders.HOST,getHostName(url));
-		requestBuilder = buildCommonHeaders(requestBuilder);		
-				
-		return requestBuilder;
-	}
+	     String array[]=new String[4];
+	try
+    {
+		//WebDriver driver =new FirefoxDriver();
 		
-	private static RequestBuilder buildCommonHeaders(RequestBuilder requestBuilder)
-	{
-		return requestBuilder.setHeader(HttpHeaders.ACCEPT_LANGUAGE,"en-us")
-		;
-	}
-	
-	public static String getHostName(String uri)
-	{
-		//String uri ="https://vp21q01su-volume.isu.apple.com/devices/server/edit";
-		String hostname = null;
-		if(uri.startsWith("https://") || uri.startsWith("http://"))
-			hostname =  uri.split("//")[1].split("/")[0];
-		else
-			hostname = uri.split("/")[0];
-		return hostname;
-			
-	}
-
-	public static HttpResponse getHttpResponseForStringReqEntity(RequestBuilder requestBuilder, String inputString) {
 		
-		HttpResponse response = null;
-		try {
-			HttpClient client = HttpClientBuilder.create().build();
-			StringEntity requestEntity = new StringEntity(inputString);		 
-			HttpUriRequest request = requestBuilder.setEntity(requestEntity).build();
-			response = client.execute(request);
-		} catch (ClientProtocolException e) {
-			response = null;
-			e.printStackTrace();
-		} catch (IOException e) {
-			response = null;
-			e.printStackTrace();
-		}
-		return response;		
-	}
+        FileInputStream file = new FileInputStream(new File("CurrencyConvertionData.xlsx"));
+        
+   
 
-	public static HttpResponse getHttpResponse(RequestBuilder requestBuilder) {
-		
-		HttpResponse response = null;
-		try {
-			HttpClient client = HttpClientBuilder.create().build();
-			HttpUriRequest request = requestBuilder.build();
-			response = client.execute(request);
-		} catch (ClientProtocolException e) {
-			response = null;
-			e.printStackTrace();
-		} catch (IOException e) {
-			response = null;
-			e.printStackTrace();
-		}
-		return response;		
-	}
-	
-	
-	public static String[] getStringArrayFromJsonArray(JSONArray jsonArray) {
-		System.out.println(jsonArray);
-		if(jsonArray != null){
-			ArrayList<String> list = new ArrayList<String>();     
-				int len = jsonArray.length();
-				for (int i=0;i<len;i++){ 
-					list.add(jsonArray.get(i).toString());
-				} 
-			return list.toArray(new String[list.size()]);
-		}
-		else 
-			return null;
-	}
-	
-	
-	static Random rnd = new Random();
-	public static final String alpha_numeric = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	public static final String numeric = "0123456789";
-	public static final String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	public static final String alpha_numeric_sym = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ/_.-";
+        //Create Workbook instance holding reference to .xlsx file
+        XSSFWorkbook workbook = new XSSFWorkbook(file);
 
-	public static String randomString( int len, String type ) 
-	{
-		StringBuilder sb = new StringBuilder( len );
-		for( int i = 0; i < len; i++ ) 
-			sb.append( type.charAt( rnd.nextInt(type.length()) ) );
-		return sb.toString();
-	}
-	
-	public static String randomString( int len) 
-	{
-		return randomString( len,TestUtil.alpha_numeric); 
-	}
-	
+        //Get first/desired sheet from the workbook
+        XSSFSheet sheet = workbook.getSheetAt(0);
+
+        //Iterate through each rows one by one
+        Iterator<Row> rowIterator = sheet.iterator();
+        
+        
+        for(int j=0;j<2;j++)
+        {
+            Row row = rowIterator.next();
+            //For each row, iterate through all the columns
+            Iterator<Cell> cellIterator = row.cellIterator();
+             for(int k=0;k<4;k++)
+          
+            {
+                Cell cell = cellIterator.next();
+                //Check the cell type and format accordingly
+              //  System.out.print(cell.getDateCellValue() + "\t");
+                
+                switch (cell.getCellType()) 
+                {
+                    case Cell.CELL_TYPE_NUMERIC:
+                    	array[k]=cell.getNumericCellValue()+"";
+                        System.out.print(cell.getNumericCellValue() + "\t");
+                        break;
+                    case Cell.CELL_TYPE_STRING:
+                    	array[k]=cell.getStringCellValue()+"";
+                       System.out.print(cell.getStringCellValue() + "\t");
+                        break;
+                    
+                }
+            }
+            System.out.println("");
+        }
+        file.close();
+        
+    } 
+    catch (Exception e) 
+    {
+        e.printStackTrace();
+    }
+	return array;
+
+}
+
 	public static void main(String[] args) throws IOException {
 
 	

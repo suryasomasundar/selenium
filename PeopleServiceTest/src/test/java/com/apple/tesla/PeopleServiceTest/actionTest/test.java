@@ -8,6 +8,9 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
 
 public class test {
 
@@ -17,6 +20,7 @@ public class test {
 		
 		try
         {
+			//WebDriver driver =new FirefoxDriver();
 			
 			
             FileInputStream file = new FileInputStream(new File("CurrencyConvertionData.xlsx"));
@@ -29,13 +33,15 @@ public class test {
  
             //Iterate through each rows one by one
             Iterator<Row> rowIterator = sheet.iterator();
-            while (rowIterator.hasNext()) 
+            
+            int i=0;
+            for(int j=0;j<2;j++)
             {
                 Row row = rowIterator.next();
                 //For each row, iterate through all the columns
                 Iterator<Cell> cellIterator = row.cellIterator();
-                 
-                while (cellIterator.hasNext()) 
+                 for(int k=0;k<4;k++)
+              
                 {
                     Cell cell = cellIterator.next();
                     //Check the cell type and format accordingly

@@ -16,7 +16,19 @@ public class WebElementPaths {
 	@FindBy(id="base_currency")
 	WebElement baseCurrencyTextbox;
 	
+	@FindBy(id="quote_amount_input")
+	WebElement quoteAmountTextbox;
 	
+	@FindBy(id="base_amount_input")
+	WebElement baseAmountTextbox;
+
+	@FindBy(id="interbank_rates_input")
+	WebElement interbankRatesTextbox;
+	
+	@FindBy(id="end_date_inputt")
+	WebElement dateTextbox;
+	
+
 	
 	
 	
