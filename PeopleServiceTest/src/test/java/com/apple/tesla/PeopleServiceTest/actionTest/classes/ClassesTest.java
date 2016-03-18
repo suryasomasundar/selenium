@@ -242,4 +242,65 @@ public class ClassesTest {
 	Thread.sleep(1000);		
 	System.out.println(utils.getBaseAmount());
 	}
+	
+	
+	
+	@Then("User selects date")
+	public void selectDate() throws InterruptedException{
+
+		utils.clickDate();
+		utils.clearDate();
+		Thread.sleep(2000);
+		utils.inputDate("03/14/2014");
+		Thread.sleep(2000);
+		utils.enterDate();
+		
+		
+	}
+	
+	@Then("User clicks on calender icon")
+	public void clickCalenderIcon() throws InterruptedException{
+
+		utils.clickCalenderButton();
+		System.out.println(utils.iscalenderContainerVisible());	
+	}
+	
+	@Then("User checks whether navigation between years works")
+	public void checkNavigationYear() throws InterruptedException{
+
+		System.out.println(utils.getDateMonth());
+		Thread.sleep(2000);
+		utils.clickCalenderPrevYear();
+		System.out.println(utils.getDateMonth());
+		Thread.sleep(2000);
+		utils.clickCalenderNextYear();
+				
+	}
+	
+	@Then("User checks whether navigation between months works")
+	public void checkNavigationMonth() throws InterruptedException{
+		Thread.sleep(2000);
+		System.out.println(utils.getDateMonth());
+		utils.clickCalenderPrevMonth();
+		Thread.sleep(2000);
+		System.out.println(utils.getDateMonth());
+		utils.clickCalenderNextMonth();
+		
+				
+	}
+	@Then("User clicks on a date")
+	public void checkNavigationDate() throws InterruptedException{
+
+		Thread.sleep(2000);
+		//utils.clickCalenderDate();
+		System.out.println(utils.getDate());
+		
+				
+	}
+	
+	
+	
+	
+	
+	
 }

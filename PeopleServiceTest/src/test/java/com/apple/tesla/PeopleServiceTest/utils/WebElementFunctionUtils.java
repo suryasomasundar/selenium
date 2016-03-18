@@ -81,8 +81,30 @@ public class WebElementFunctionUtils extends WebElementPaths{
 	{
 		baseCurrencyAlertClose.click();
 	}
-	
-	
+	public void clickCalenderButton()
+	{
+		calenderButton.click();
+	}
+	public void clickCalenderPrevYear()
+	{
+		calenderPrevYear.click();
+	}
+	public void clickCalenderNextYear()
+	{
+		calenderNextYear.click();
+	}
+	public void clickCalenderPrevMonth()
+	{
+		calenderPrevMonth.click();
+	}
+	public void clickCalenderNextMonth()
+	{
+		calenderNextMonth.click();
+	}
+	public void clickCalenderDate()
+	{
+		calenderDate.click();
+	}
 //clear
 	public void clearQuoteAmount()
 	{
@@ -129,6 +151,15 @@ public class WebElementFunctionUtils extends WebElementPaths{
 		return baseAmountTextbox.getAttribute("value");
 	}
 	
+	public String getDateMonth()
+	{
+		return calenderMonth.getText();
+	}
+	
+	public String getDate()
+	{
+		return calenderDate.getText();
+	}
 	//visible
 
 	public boolean isQuoteAlertVisible()
@@ -144,6 +175,13 @@ public class WebElementFunctionUtils extends WebElementPaths{
 	{
 		return dateAlert.isDisplayed();
 	}
+	
+	public boolean iscalenderContainerVisible()
+	{
+		return calenderContainer.isDisplayed();
+	}
+	
+	
 	
 	//click
 	

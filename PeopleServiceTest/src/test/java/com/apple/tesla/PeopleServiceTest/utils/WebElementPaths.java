@@ -56,7 +56,7 @@ public class WebElementPaths {
 	WebElement interbankDropdown;
 	
 	@FindBy(id="end_date_button")
-	WebElement endDateButton;
+	WebElement calenderButton;
 	
 	@FindBy(id="date_rewind")
 	WebElement dateBefore;
@@ -70,16 +70,16 @@ public class WebElementPaths {
 	@FindBy(xpath=".//*[@id='ncc']//div[@class='calendarContainer']/div[@class='closeCalender']")
 	WebElement closeCalender;
 	
-	@FindBy(xpath=".//*[@id='ncc']//div[@class='calendarContainer']//div[@class='calendarHeader']//div[@class='calendarNavButton navLastYear']")
+	@FindBy(xpath=".//*[@id='ncc']//div[@class='calendarContainer']//div[@class='calendarHeader']//a[@class='calendarNavButton navLastYear']")
 	WebElement calenderPrevYear;
 	
-	@FindBy(xpath=".//*[@id='ncc']//div[@class='calendarContainer']//div[@class='calendarHeader']//div[@class='calendarNavButton navLastMonth']")
+	@FindBy(xpath=".//*[@id='ncc']//div[@class='calendarContainer']//div[@class='calendarHeader']//a[@class='calendarNavButton navLastMonth']")
 	WebElement calenderPrevMonth;
 	
-	@FindBy(xpath=".//*[@id='ncc']//div[@class='calendarContainer']//div[@class='calendarMonthDisplay']//div[@class='calendarNavButton navNextYear']")
+	@FindBy(xpath=".//*[@id='ncc']//div[@class='calendarContainer']//div[@class='calendarHeader']//a[@class='calendarNavButton navNextYear']")
 	WebElement calenderNextYear;
 
-	@FindBy(xpath=".//*[@id='ncc']//div[@class='calendarContainer']//div[@class='calendarMonthDisplay']//div[@class='calendarNavButton navNextMonth']")
+	@FindBy(xpath=".//*[@id='ncc']//div[@class='calendarContainer']//div[@class='calendarHeader']//a[@class='calendarNavButton navNextMonth']")
 	WebElement calenderNextMonth;
 	
 	@FindBy(xpath=".//*[@id='ncc']//div[@class='calendarContainer']//div[@class='calendarMonthDisplay']/span[1]")
