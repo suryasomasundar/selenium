@@ -39,7 +39,7 @@ public class ClassesTest {
 	
 	TestUtil readInput=new TestUtil();
 	
-	String quoteCurrency,baseCurrency,quoteAmount,baseAmount,date;
+	String quoteCurrency,baseCurrency,quoteAmount,baseAmount,date,conversionAmount;
 	String inputArray[]=new String[4];
 	
 	@Given("User navigates to the Website")
@@ -52,22 +52,6 @@ public class ClassesTest {
 		driver.manage().window().maximize() ;
 	    
 	    utils=new WebElementFunctionUtils(driver);
-	    
-	   
-	    
-	    System.out.println(quoteCurrency);
-	    Actions action = new Actions(driver);
-	  
-	
-
-	
-	
-	utils.clearQuoteAmount();
-	Thread.sleep(2000);
-	utils.inputQuoteAmount(quoteAmount);
-
-		
-		
 		
 		
 	}
@@ -79,7 +63,7 @@ public class ClassesTest {
 		    
 		    quoteCurrency=inputArray[0];
 		    baseCurrency=inputArray[1];
-		    quoteAmount=inputArray[2];
+		    conversionAmount=inputArray[2];
 		  String tempdate= inputArray[3];
 		    StringBuilder sb = new StringBuilder(tempdate);
 		    sb.deleteCharAt(0);
@@ -122,16 +106,17 @@ public class ClassesTest {
 	{
 		utils.clearQuoteAmount();
 		Thread.sleep(2000);
-		utils.inputQuoteAmount(quoteAmount);
+		utils.inputQuoteAmount("543");
 		
 	}
 	
 	@Then("User checks converted baseCurrency")
 	public void checkBaseCurrency() throws InterruptedException
 	{
-		Thread.sleep(1000);
-		System.out.println("basetext"+utils.getBaseAmount());
+	
 		
+			
+			
 	}
 	
 	@Then("User closes the browser")
@@ -182,22 +167,25 @@ public class ClassesTest {
 		
 		System.out.println(utils.isBaseAlertVisible());
 	}
+	
+	
+	
+	@Then("User Enters Date \"(.+)\"")
+	public void inputAlertDate(String date) throws InterruptedException
+	{
+		utils.clickDate();
+		utils.clearDate();
+		Thread.sleep(2000);
+		utils.inputDate(date);
+		Thread.sleep(2000);
+		utils.enterDate();
+	}
+	
+	
 	@Then("User checks for dateAlert")
 	public void checkDateAlert() throws InterruptedException
 	{
-		utils.clickQuoteCurrency();
-		Thread.sleep(2000);
-		utils.inputQuoteCurrency("Malagasy Franc");
-		Thread.sleep(2000);
-		utils.enterQuoteCurrency();
-		
-		utils.clickQuoteCurrency();
-		Thread.sleep(2000);
-		utils.inputQuoteCurrency("Euro");
-		Thread.sleep(2000);
-		utils.enterQuoteCurrency();
-		
-		
+			
 		Thread.sleep(2000);
 		System.out.println(utils.isDateAlertVisible());
 		
@@ -205,5 +193,53 @@ public class ClassesTest {
 		utils.closeDateAlert();
 		
 		System.out.println(utils.isDateAlertVisible());
+	}
+	
+	@Then("User inputs quoteTextbox \"(.+)\"")
+	public void textBox(String input) throws InterruptedException
+	{
+		Thread.sleep(2000);
+		if(input.equals("empty"))
+		{
+		utils.clearQuoteAmount();
+		}
+		else
+		{
+			utils.clearQuoteAmount();
+		utils.inputQuoteAmount(input);
+		}
+		utils.clickBaseAmount();
+	}
+	
+	@Then("User checks the quoteTextbox \"(.+)\"")
+	public void checkTextBox(String input) throws InterruptedException
+	{
+	Thread.sleep(1000);		
+	System.out.println(utils.getQuoteAmount());
+	}
+	
+	
+	@Then("User inputs baseTextbox \"(.+)\"")
+	public void basetextBox(String input) throws InterruptedException
+	{
+		Thread.sleep(2000);
+		
+		if(input.equals("empty"))
+		{
+			utils.clearBaseAmount();
+		}
+		else
+		{
+		utils.clearBaseAmount();
+		utils.inputBaseAmount(input);
+		}
+		utils.clickQuoteAmount();
+	}
+	
+	@Then("User checks the baseTextbox \"(.+)\"")
+	public void checkbaseTextBox(String input) throws InterruptedException
+	{
+	Thread.sleep(1000);		
+	System.out.println(utils.getBaseAmount());
 	}
 }

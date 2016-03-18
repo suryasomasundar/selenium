@@ -26,10 +26,12 @@ Scenario Outline: baseCurrency alert check
 	@smoke
 Scenario Outline: date alert check
 	Given User navigates to the Website
+	Then User Enters quoteCurrency "<quoteCurrency>"
+	Then User Enters Date "<date>"
 	Then User checks for dateAlert
 	Then User close the browser
 	
 	Examples:
-	|quoteCurrency|
-	|Malagasy Franc|	
+	|quoteCurrency|date|
+	|Malagasy Franc|03/14/1992|	
 

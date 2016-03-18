@@ -46,6 +46,48 @@ public class WebElementPaths {
 	@FindBy(xpath=".//*[@id='date_annotation']/div[@class='annotation_close']")
 	WebElement dateAlertClose;
 	
+	@FindBy(id="quote_currency_list_container")
+	WebElement quoteDropdown;
+	
+	@FindBy(id="base_currency_list_container")
+	WebElement baseDropdown;
+	
+	@FindBy(id="interbank_rate_list_container")
+	WebElement interbankDropdown;
+	
+	@FindBy(id="end_date_button")
+	WebElement endDateButton;
+	
+	@FindBy(id="date_rewind")
+	WebElement dateBefore;
+	
+	@FindBy(id="date_forward")
+	WebElement dateAfter;
+	
+	@FindBy(xpath=".//*[@id='ncc']//div[@class='calendarContainer']")
+	WebElement calenderContainer;
+	
+	@FindBy(xpath=".//*[@id='ncc']//div[@class='calendarContainer']/div[@class='closeCalender']")
+	WebElement closeCalender;
+	
+	@FindBy(xpath=".//*[@id='ncc']//div[@class='calendarContainer']//div[@class='calendarHeader']//div[@class='calendarNavButton navLastYear']")
+	WebElement calenderPrevYear;
+	
+	@FindBy(xpath=".//*[@id='ncc']//div[@class='calendarContainer']//div[@class='calendarHeader']//div[@class='calendarNavButton navLastMonth']")
+	WebElement calenderPrevMonth;
+	
+	@FindBy(xpath=".//*[@id='ncc']//div[@class='calendarContainer']//div[@class='calendarMonthDisplay']//div[@class='calendarNavButton navNextYear']")
+	WebElement calenderNextYear;
+
+	@FindBy(xpath=".//*[@id='ncc']//div[@class='calendarContainer']//div[@class='calendarMonthDisplay']//div[@class='calendarNavButton navNextMonth']")
+	WebElement calenderNextMonth;
+	
+	@FindBy(xpath=".//*[@id='ncc']//div[@class='calendarContainer']//div[@class='calendarMonthDisplay']/span[1]")
+	WebElement calenderMonth;
+	
+	@FindBy(xpath=".//*[@id='ncc']//div[@class='calendarContainer']//div[@class='calendarHeader']/table/tbody/tr[3]/td[4]")
+	WebElement calenderDate;
+
 	
 	
 	  public WebElementPaths(WebDriver driver){
