@@ -85,9 +85,12 @@ public class WebElementPaths {
 	@FindBy(xpath=".//*[@id='ncc']//div[@class='calendarContainer']//div[@class='calendarMonthDisplay']/span[1]")
 	WebElement calenderMonth;
 	
-	@FindBy(xpath=".//*[@id='ncc']//div[@class='calendarContainer']//div[@class='calendarHeader']/table/tbody/tr[3]/td[4]")
+	@FindBy(xpath=".//*[@id='ncc']/div[1]/div[3]/span[3]/div[3]/table/tbody/tr[3]/td[4]")
 	WebElement calenderDate;
 
+	@FindBy(id="flipper")
+	WebElement flipper;
+	
 	
 	
 	  public WebElementPaths(WebDriver driver){

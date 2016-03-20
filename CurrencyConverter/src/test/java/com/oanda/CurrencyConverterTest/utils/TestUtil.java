@@ -64,7 +64,7 @@ public class TestUtil {
 
 	public String[] readFromExcel(int i)
 	{
-	     String array[]=new String[6];
+	     String array[]=new String[7];
 	try
     {
 		//WebDriver driver =new FirefoxDriver();
@@ -84,12 +84,12 @@ public class TestUtil {
         Iterator<Row> rowIterator = sheet.iterator();
         
         
-        for(int j=0;j<2;j++)
+        for(int j=0;j<i;j++)
         {
             Row row = rowIterator.next();
             //For each row, iterate through all the columns
             Iterator<Cell> cellIterator = row.cellIterator();
-             for(int k=0;k<4;k++)
+             for(int k=0;k<7;k++)
           
             {
                 Cell cell = cellIterator.next();

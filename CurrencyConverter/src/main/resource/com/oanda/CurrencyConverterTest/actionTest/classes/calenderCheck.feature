@@ -7,7 +7,6 @@ Scenario Outline: Validating whether User is able to select date from calender
 	Then User clicks on calender icon
 	Then User checks whether navigation between years works
 	Then User checks whether navigation between months works
-	Then User clicks on a date
 	Then User close the browser
 	
 	Examples:

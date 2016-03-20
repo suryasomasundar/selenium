@@ -105,6 +105,10 @@ public class WebElementFunctionUtils extends WebElementPaths{
 	{
 		calenderDate.click();
 	}
+	public void clickFlipper()
+	{
+		flipper.click();
+	}
 //clear
 	public void clearQuoteAmount()
 	{
@@ -166,7 +170,7 @@ public class WebElementFunctionUtils extends WebElementPaths{
 	
 	public String getDate()
 	{
-		return calenderDate.getText();
+		return dateTextbox.getText();
 	}
 	//visible
 

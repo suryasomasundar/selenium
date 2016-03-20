@@ -36,10 +36,12 @@ public class CurrencyConverterTest {
 	HttpResponse response;
 	WebDriver driver;
 	WebElementFunctionUtils utils;
+	HashMap<String, Integer> select = new HashMap <String ,Integer>();
+	HashMap<String, Integer> fav = new HashMap <String ,Integer>();
 	
 	TestUtil readInput=new TestUtil();
 	
-	String quoteCurrency,baseCurrency,quoteAmount,baseAmount,date,quoteAmountChanged,interBank;
+	String quoteCurrency,baseCurrency,quoteAmount,baseAmount,date,baseAmountChanged,interBank;
 	String inputArray[]=new String[4];
 	
 	@Given("User navigates to the Website")
@@ -56,10 +58,11 @@ public class CurrencyConverterTest {
 		
 	}
 	
-	@Then("User reads input from excel (.+)")
+	@Then("User reads input from excel \"(.+)\"")
 	public void readFromExcel(String input)
 	{
-		 inputArray=readInput.readFromExcel(2);
+		int i=Integer.parseInt(input);
+		 inputArray=readInput.readFromExcel(i);
 		    
 		    quoteCurrency=inputArray[0];
 		    baseCurrency=inputArray[1];
@@ -70,7 +73,7 @@ public class CurrencyConverterTest {
 		    StringBuilder sb = new StringBuilder(tempdate);
 		    sb.deleteCharAt(0);
 		    date=sb.toString();
-		    quoteAmountChanged=inputArray[6];
+		    baseAmountChanged=inputArray[6];
 	}
 	
 	@Then("User inputs quoteCurrency")
@@ -81,6 +84,16 @@ public class CurrencyConverterTest {
 		utils.inputQuoteCurrency(quoteCurrency);
 		Thread.sleep(2000);
 		utils.enterQuoteCurrency();
+	}
+	
+	@Then("User inputs baseCurrency")
+	public void inputbaseCurrency() throws InterruptedException
+	{
+		utils.clickBaseCurrency();
+		Thread.sleep(2000);
+		utils.inputBaseCurrency(baseCurrency);
+		Thread.sleep(2000);
+		utils.enterBaseCurrency();
 	}
 	
 	@Then("User inputs baseCurrency")
@@ -117,7 +130,7 @@ public class CurrencyConverterTest {
 	{
 		utils.clearQuoteAmount();
 		Thread.sleep(2000);
-		utils.inputQuoteAmount("543");
+		utils.inputQuoteAmount(quoteAmount);
 		
 	}
 	
@@ -126,14 +139,39 @@ public class CurrencyConverterTest {
 	{
 	
 		
-			System.out.println(baseAmount);
+			Assert.assertEquals(utils.getBaseAmount(),baseAmount);
 			
+			utils.clickFlipper();
+			
+			Thread.sleep(2000);
+			
+			Assert.assertEquals(utils.getQuoteAmount(),quoteAmount);
+			Assert.assertEquals(utils.getBaseAmount(),baseAmountChanged);
 	}
+	
+	@Then("User checks converted quoteCurrency")
+	public void checkQuoteCurrency() throws InterruptedException
+	{
+	
+		
+			Assert.assertEquals(utils.getQuoteAmount(),quoteAmount);
+			
+			utils.clickFlipper();
+			
+			Thread.sleep(2000);
+			
+			Assert.assertEquals(utils.getQuoteAmount(),quoteAmount);
+			Assert.assertEquals(utils.getBaseAmount(),baseAmountChanged);
+	}
+	
+	
+	
 	
 	@Then("User closes the browser")
 	public void close() throws InterruptedException
 	{
-		//driver.close();
+		Thread.sleep(5000);
+		driver.close();
 		
 	}
 	
@@ -150,12 +188,12 @@ public class CurrencyConverterTest {
 	public void checkQuoteAlert() throws InterruptedException
 	{
 		Thread.sleep(2000);
-		System.out.println(utils.isQuoteAlertVisible());
+		Assert.assertTrue(utils.isQuoteAlertVisible());
 		
 		Thread.sleep(2000);
 		utils.closeQuoteAlert();
 		
-		System.out.println(utils.isQuoteAlertVisible());
+		Assert.assertTrue(utils.isQuoteAlertVisible());
 	}
 	
 	@Then("User Enters baseCurrency \"(.+)\"")
@@ -171,12 +209,12 @@ public class CurrencyConverterTest {
 	public void checkBaseAlert() throws InterruptedException
 	{
 		Thread.sleep(2000);
-		System.out.println(utils.isBaseAlertVisible());
+		Assert.assertTrue(utils.isBaseAlertVisible());
 		
 		Thread.sleep(2000);
 		utils.closeBaseAlert();
 		
-		System.out.println(utils.isBaseAlertVisible());
+		Assert.assertTrue(utils.isBaseAlertVisible());
 	}
 	
 	
@@ -198,12 +236,12 @@ public class CurrencyConverterTest {
 	{
 			
 		Thread.sleep(2000);
-		System.out.println(utils.isDateAlertVisible());
+		Assert.assertTrue(utils.isDateAlertVisible());
 		
 		Thread.sleep(2000);
 		utils.closeDateAlert();
 		
-		System.out.println(utils.isDateAlertVisible());
+		Assert.assertTrue(utils.isDateAlertVisible());
 	}
 	
 	@Then("User inputs quoteTextbox \"(.+)\"")
@@ -226,7 +264,7 @@ public class CurrencyConverterTest {
 	public void checkTextBox(String input) throws InterruptedException
 	{
 	Thread.sleep(1000);		
-	System.out.println(utils.getQuoteAmount());
+	Assert.assertEquals(utils.getQuoteAmount(),input);
 	}
 	
 	
@@ -251,7 +289,7 @@ public class CurrencyConverterTest {
 	public void checkbaseTextBox(String input) throws InterruptedException
 	{
 	Thread.sleep(1000);		
-	System.out.println(utils.getBaseAmount());
+	Assert.assertEquals(utils.getBaseAmount(),input);
 	}
 	
 	
@@ -273,7 +311,7 @@ public class CurrencyConverterTest {
 	public void clickCalenderIcon() throws InterruptedException{
 
 		utils.clickCalenderButton();
-		System.out.println(utils.iscalenderContainerVisible());	
+	   Assert.assertTrue(utils.iscalenderContainerVisible());	
 	}
 	
 	@Then("User checks whether navigation between years works")
@@ -282,9 +320,10 @@ public class CurrencyConverterTest {
 		System.out.println(utils.getDateMonth());
 		Thread.sleep(2000);
 		utils.clickCalenderPrevYear();
-		System.out.println(utils.getDateMonth());
+		Assert.assertTrue(utils.getDateMonth().equals("MAR 2013"));
 		Thread.sleep(2000);
 		utils.clickCalenderNextYear();
+		Assert.assertTrue(utils.getDateMonth().equals("MAR 2014"));
 				
 	}
 	
@@ -293,21 +332,45 @@ public class CurrencyConverterTest {
 		Thread.sleep(2000);
 		System.out.println(utils.getDateMonth());
 		utils.clickCalenderPrevMonth();
+		Assert.assertTrue(utils.getDateMonth().equals("FEB 2014"));
 		Thread.sleep(2000);
-		System.out.println(utils.getDateMonth());
 		utils.clickCalenderNextMonth();
-		
+		Assert.assertTrue(utils.getDateMonth().equals("MAR 2014"));
 				
 	}
-	@Then("User clicks on a date")
-	public void checkNavigationDate() throws InterruptedException{
-
+	
+	@Then("User selects countries from dropdown")
+	public void selectCountries() throws InterruptedException{
+	
+		for(int i=8;i<13;i++){
+		utils.clickQuoteCurrency();
 		Thread.sleep(2000);
-		//utils.clickCalenderDate();
-		System.out.println(utils.getDate());
-		
+		WebElement element=driver.findElement(By.xpath(".//*[@id='scroll-innerBox-1']/div["+i+"]"));
+		Thread.sleep(2000);
+		System.out.println(element.getText());
+		select.put(element.getText(), i);
+		element.click();
+
+		}
+
+		System.out.println(select.keySet());
 				
 	}
+	
+	@Then("User checks whether selected countries are listed as favourites")
+	public void checkFavourites() throws InterruptedException{
+		driver.findElement(By.xpath(".//*[@id='quote_currency']")).click();
+		for(int i=6;i>1;i--){
+		Thread.sleep(2000);
+		WebElement element=driver.findElement(By.xpath(".//*[@id='scroll-innerBox-1']/div["+i+"]"));
+		Thread.sleep(2000);
+		fav.put(element.getText(), i);
+		}
+		System.out.println(fav.keySet());
+		Assert.assertTrue(select.keySet().equals(fav.keySet()));
+				
+	}
+
 	
 	
 	
